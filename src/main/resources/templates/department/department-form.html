@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${department.id != null ? 'Edit Department':'Add Department'}">Department Form</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+    <script th:src="@{/js/bootstrap.bundle.js}" type="text/javascript"></script>
+</head>
+<body class="p-3 m-3 border-0">
+    <div class="container mt-3">
+        <div class="row">
+            <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+                <span th:text="${successMessage}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <span th:text="${errorMessage}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            <div class="mb-3 mb-sm-0">
+               <div class="card">
+                   <div class="card-header">
+                       <h3 class="card-title fw-bolder" th:text="${department.id != null ? 'Edit Department':'Add Department'}">Department Form</h3>
+                   </div>
+                   <div class="card-body">
+                       <form th:action="@{/departments/insertOrUpdateDepartment}" method="post" class="row g-3" th:object="${department}">
+                           <input type="hidden" th:field="*{id}">
+                           <div class="col-12 mt-3">
+                               <label class="form-label fw-bold">Department Name</label>
+                               <input type="text" class="form-control" th:field="*{departmentName}">
+                               <div class="text-danger" th:if="${#fields.hasErrors('departmentName')}" th:errors="*{departmentName}"></div>
+                           </div>
+                           <div class="col-12 d-grid gap-2">
+                               <button type="submit" class="btn btn-success">Submit</button>
+                           </div>
+                       </form>
+                   </div>
+               </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
