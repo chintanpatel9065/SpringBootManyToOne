@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employees</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+    <script th:src="@{/js/bootstrap.bundle.js}" type="text/javascript"></script>
+</head>
+<body class="p-3 m-3 border-0">
+    <div class="container mt-3">
+        <div class="row">
+            <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+                <span th:text="${successMessage}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <span th:text="${errorMessage}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            <div class="mb-3 mb-sm-0">
+                <div class="d-flex justify-content-end">
+                    <a th:href="@{/employees/create}" class="btn-success btn">Add New Employee</a>
+                </div>
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h3 class="card-title fw-bolder">Search</h3>
+                    </div>
+                    <div class="card-body mt-3">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <form th:action="@{/employees/search/employeeName}" class="row g-3">
+                                    <div class="col-sm-8">
+                                        <input type="text" name="employeeName" class="form-control" placeholder="Search Employee Name">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <button type="submit" class="btn btn-success">Search By Name</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-md-6">
+                                <form th:action="@{/employees/search/departmentName}" class="row g-3">
+                                    <div class="col-sm-8">
+                                        <input type="text" name="departmentName" class="form-control" placeholder="Search Department Name">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <button type="submit" class="btn btn-success">Search By Department</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-5">
+                    <div class="card-header">
+                        <h3 class="card-title fw-bolder">Employees</h3>
+                    </div>
+                    <div class="card-body mt-3">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>FirstName</th>
+                                    <th>LastName</th>
+                                    <th>MobileNumber</th>
+                                    <th>HiringDate</th>
+                                    <th>Salary</th>
+                                    <th>UserName</th>
+                                    <th>Department</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="employee : ${employeeList}">
+                                    <td th:text="${employee.firstName}"></td>
+                                    <td th:text="${employee.lastName}"></td>
+                                    <td th:text="${employee.mobileNumber}"></td>
+                                    <td th:text="${employee.hiringDate}"></td>
+                                    <td th:text="${employee.salary}"></td>
+                                    <td th:text="${employee.userName}"></td>
+                                    <td th:text="${employee.department.departmentName}"></td>
+                                    <td>
+                                        <a th:href="@{/employees/manageEmployee/{id}(id=${employee.id})}" class="link-success text-decoration-none">Edit</a>
+                                        &nbsp;|&nbsp;
+                                        <a th:href="@{/employees/deleteEmployee/{id}(id=${employee.id})}" class="link-danger text-decoration-none">Delete</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
